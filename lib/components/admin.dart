@@ -27,7 +27,7 @@ class SpotifyAdmin extends StatelessWidget {
                               )));
                 },
                 child: ListTile(
-                  title: Text("Add a new artists"),
+                  title: Text("Add a new artist"),
                 ),
               ),
             ),
@@ -45,7 +45,7 @@ class SpotifyAdmin extends StatelessWidget {
                               )));
                 },
                 child: ListTile(
-                  title: Text("Add a new Category of Music"),
+                  title: Text("Add a new category"),
                 ),
               ),
             ),
@@ -63,7 +63,7 @@ class SpotifyAdmin extends StatelessWidget {
                               )));
                 },
                 child: ListTile(
-                  title: Text("Add a new Song"),
+                  title: Text("Add a new song"),
                 ),
               ),
             ),
@@ -81,7 +81,7 @@ class SpotifyAdmin extends StatelessWidget {
                               )));
                 },
                 child: ListTile(
-                  title: Text("Create a new Album"),
+                  title: Text("Create a new album"),
                 ),
               ),
             ),

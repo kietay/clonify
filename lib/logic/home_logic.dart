@@ -14,11 +14,18 @@ class RecentlyPlayedItem {
 }
 
 class RecentlyPlayedLogic extends ChangeNotifier {
-  bool funCalled = false;
+  bool historyFetched = false;
 
   List<RecentlyPlayedItem> recentlyPlayed = [];
 
-  void getSongHistory() async {
+  void fetchUserHistory() async {
+    recentlyPlayed += await getSongHistory();
+    recentlyPlayed += await getPlaylistHistory();
+    historyFetched = true;
+    notifyListeners();
+  }
+
+  Future<List<RecentlyPlayedItem>> getSongHistory() async {
     // Query the db for the user's songs ids then fetch details of all those songs
     final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
     print("Getting song history for user");
@@ -31,46 +38,38 @@ class RecentlyPlayedLogic extends ChangeNotifier {
     final fetchedSongs = await Future.wait(qsnap.documents.map((elem) =>
         Firestore.instance.collection("songs").document(elem['songId']).get()));
 
-    recentlyPlayed = fetchedSongs.map((fdoc) => RecentlyPlayedItem(
-        id: fdoc.data['songId'],
-        lastPlayed: fdoc.data['lastPlayed'],
-        thumbnailUrl: fdoc.data['thumbnailUrl'],
-        type: 'song',
-        title: fdoc.data['songTitle']));
-
-    getPlaylistHistory();
+    return fetchedSongs
+        .map((fdoc) => RecentlyPlayedItem(
+            id: fdoc.data['songId'],
+            lastPlayed: fdoc.data['lastPlayed'],
+            thumbnailUrl: fdoc.data['thumbnailUrl'],
+            type: 'song',
+            title: fdoc.data['songTitle']))
+        .toList();
   }
 
-  void getPlaylistHistory() async {
+  Future<List<RecentlyPlayedItem>> getPlaylistHistory() async {
     final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
+    print("Getting playlist history for user");
     QuerySnapshot qsnap = await Firestore.instance
         .collection("users")
         .document(firebaseUser.uid)
         .collection("playlistHistory")
         .getDocuments();
 
-    List<DocumentSnapshot> data = qsnap.documents;
+    final fetchedPlaylists = await Future.wait(qsnap.documents.map((elem) =>
+        Firestore.instance
+            .collection("playlists")
+            .document(elem['playlistId'])
+            .get()));
 
-    for (int i = 0; i < data.length; i++) {
-      await Firestore.instance
-          .collection("users")
-          .document(data[i]['playlistUserId'])
-          .collection("userCreatedPlayLists")
-          .document(data[i]['playListId'])
-          .get()
-          .then((documentSnapshot) {
-        recentlyPlayed.add(RecentlyPlayedItem(
-            id: data[i]['playListId'],
+    return fetchedPlaylists
+        .map((fdoc) => RecentlyPlayedItem(
+            id: fdoc.data['playlistId'],
+            lastPlayed: fdoc.data['lastPlayed'],
             thumbnailUrl: './images/spotify_smaller.png',
-            lastPlayed: data[i]['lastPlayed'],
             type: 'playlist',
-            title: documentSnapshot['playlistName']));
-      });
-    }
-
-    // var recents = data.map((playlist) => {
-
-    funCalled = true;
-    notifyListeners();
+            title: fdoc.data['playlistName']))
+        .toList();
   }
 }

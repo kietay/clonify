@@ -82,7 +82,7 @@ class RecentlyPlayed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final recentlyPlayed = Provider.of<RecentlyPlayedLogic>(context);
-    if (!recentlyPlayed.funCalled) {
+    if (!recentlyPlayed.historyFetched) {
       recentlyPlayed.getSongHistory();
     }
 
@@ -107,7 +107,7 @@ class RecentlyPlayed extends StatelessWidget {
               style: TextStyle(fontFamily: 'Proxima Nova Bold', fontSize: 30.0),
             ),
           ),
-          !recentlyPlayed.funCalled
+          !recentlyPlayed.historyFetched
               ? Center(
                   child: CircularProgressIndicator(),
                 )
@@ -117,7 +117,7 @@ class RecentlyPlayed extends StatelessWidget {
                     shrinkWrap: true,
                     primary: false,
                     scrollDirection: Axis.horizontal,
-                    itemCount: recentlyPlayed.recntlyPlayedStuff.length,
+                    itemCount: recentlyPlayed.recentlyPlayed.length,
                     itemBuilder: (context, i) {
                       return Container(
                         margin: EdgeInsets.all(15.0),
@@ -130,13 +130,12 @@ class RecentlyPlayed extends StatelessWidget {
                               width: MediaQuery.of(context).size.height * 0.2,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                image:
-                                    recentlyPlayed.recntlyPlayedStuff[i].type ==
-                                            "song"
-                                        ? NetworkImage(recentlyPlayed
-                                            .recntlyPlayedStuff[i].thumbnail)
-                                        : AssetImage(recentlyPlayed
-                                            .recntlyPlayedStuff[i].thumbnail),
+                                image: recentlyPlayed.recentlyPlayed[i].type ==
+                                        "song"
+                                    ? NetworkImage(recentlyPlayed
+                                        .recentlyPlayed[i].thumbnail)
+                                    : AssetImage(recentlyPlayed
+                                        .recentlyPlayed[i].thumbnail),
                                 fit: BoxFit.cover,
                               )),
                             ),
@@ -144,7 +143,7 @@ class RecentlyPlayed extends StatelessWidget {
                               height: 10.0,
                             ),
                             Text(
-                              recentlyPlayed.recntlyPlayedStuff[i].title,
+                              recentlyPlayed.recentlyPlayed[i].title,
                               style: TextStyle(
                                 fontFamily: 'Proxima Nova Bold',
                                 fontSize: 18.0,

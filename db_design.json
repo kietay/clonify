@@ -1,5 +1,6 @@
 {
-  "user": {
+  "users": {
+    "userId": "String",
     "name": "String",
     "premiumStatus": "Boolean",
     "songHistory": [
@@ -14,7 +15,7 @@
         "lastPlayed": "Timestamp"
       }
     ],
-    "likedSongs": ["String"],
+    "likedSongIds": ["String"],
     "usersPlaylists": [
       {
         "playlistId": "String",
@@ -30,7 +31,7 @@
     ],
     "forkedPlaylists": ["String"]
   },
-  "artist": [
+  "artists": [
     {
       "artistId": "String",
       "name": "String",
@@ -39,7 +40,7 @@
       "coverImageUrl": "String: url/image"
     }
   ],
-  "song": {
+  "songs": {
     "songId": "String",
     "songTitle": "String",
     "releasedTimestamp": "String",
@@ -66,7 +67,7 @@
       "albumId": "String"
     }
   },
-  "album": {
+  "albums": {
     "artistId": "String",
     "albumTitle": "String",
     "albumIndex": "Character",
@@ -78,5 +79,9 @@
         "songId": "String"
       }
     ]
+  },
+  "genres": {
+    "genreId": "String",
+    "genreName": "String"
   }
 }

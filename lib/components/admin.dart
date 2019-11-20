@@ -173,8 +173,7 @@ class AddCategory extends StatelessWidget {
                 RaisedButton(
                   color: Colors.blue,
                   onPressed: () {
-                    adminObj.addCategory(
-                        adminObj.catName, adminObj.catImageUrl);
+                    adminObj.addGenre(adminObj.catName, adminObj.catImageUrl);
                   },
                   child: Text("Add Artist"),
                 )

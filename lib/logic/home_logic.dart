@@ -26,9 +26,9 @@ class RecentlyPlayedLogic extends ChangeNotifier {
   }
 
   Future<List<RecentlyPlayedItem>> getSongHistory() async {
-    // Query the db for the user's songs ids then fetch details of all those songs
-    final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
     print("Getting song history for user");
+
+    final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
     QuerySnapshot qsnap = await Firestore.instance
         .collection("users")
         .document(firebaseUser.uid)
@@ -49,8 +49,9 @@ class RecentlyPlayedLogic extends ChangeNotifier {
   }
 
   Future<List<RecentlyPlayedItem>> getPlaylistHistory() async {
-    final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
     print("Getting playlist history for user");
+
+    final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
     QuerySnapshot qsnap = await Firestore.instance
         .collection("users")
         .document(firebaseUser.uid)

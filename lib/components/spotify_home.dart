@@ -83,7 +83,7 @@ class RecentlyPlayed extends StatelessWidget {
   Widget build(BuildContext context) {
     final recentlyPlayed = Provider.of<RecentlyPlayedLogic>(context);
     if (!recentlyPlayed.historyFetched) {
-      recentlyPlayed.getSongHistory();
+      recentlyPlayed.fetchUserHistory();
     }
 
     return Container(
@@ -133,9 +133,9 @@ class RecentlyPlayed extends StatelessWidget {
                                 image: recentlyPlayed.recentlyPlayed[i].type ==
                                         "song"
                                     ? NetworkImage(recentlyPlayed
-                                        .recentlyPlayed[i].thumbnail)
+                                        .recentlyPlayed[i].thumbnailUrl)
                                     : AssetImage(recentlyPlayed
-                                        .recentlyPlayed[i].thumbnail),
+                                        .recentlyPlayed[i].thumbnailUrl),
                                 fit: BoxFit.cover,
                               )),
                             ),

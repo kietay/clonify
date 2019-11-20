@@ -4,37 +4,29 @@ import 'package:flutter/widgets.dart';
 class Admin extends ChangeNotifier {
   String name, coverUrl;
   void addArtist(String name, String imageUrl) {
-    try {
-      var ref = Firestore.instance.collection("artists").document();
-      ref.setData({
-        "artistId": ref.documentID,
-        "name": name,
-        "artistIndex": name[0],
-        "date": DateTime.now(),
-        "followers": 0,
-        "monthlyListerners": 0,
-        "coverImageUrl": imageUrl
-      }).then((doc) {
-        print("Perfect");
-      }).catchError((e) {
-        print(e);
-      });
-    } catch (e) {
-      print(e.message);
-    }
+    var ref = Firestore.instance.collection("artists").document();
+    ref.setData({
+      "artistId": ref.documentID,
+      "name": name,
+      "followers": 0,
+      "monthlyListerners": 0,
+      "coverImageUrl": imageUrl
+    }).then((doc) {
+      print("New artist added");
+    }).catchError((e) {
+      print(e);
+    });
   }
 
   String catName, catImageUrl;
-  void addCategory(String title, String thumbnailUrl) {
-    var ref = Firestore.instance.collection("categories").document();
+  void addGenre(String name, String thumbnailUrl) {
+    var ref = Firestore.instance.collection("genre").document();
     ref.setData({
       "categoryId": ref.documentID,
-      "isActive": true,
-      "categoryTitle": title,
-      "categoryThumbnailUrl": thumbnailUrl,
-      "categoryIndex": title[0]
-    }).then((E) {
-      print("Perfect");
+      "categoryTitle": name,
+      "thumbnailUrl": thumbnailUrl,
+    }).then((doc) {
+      print("Category added");
     }).catchError((e) {
       print(e);
     });
@@ -68,17 +60,15 @@ class Admin extends ChangeNotifier {
       String producedBy,
       String source,
       String artistIdInside,
-      String songthumbnail,
-      List<Map<String, dynamic>> categories,
+      String thumbnailUrl,
+      List<Map<String, dynamic>> genres,
       List<Map<String, dynamic>> lyrics,
       Map<String, dynamic> albumInfo) {
     var ref = Firestore.instance.collection("songs").document();
-    print(artistIdInside);
+
     ref.setData({
       "songId": ref.documentID,
       "songTitle": title,
-      "songIndex": title[0],
-      "songThumbnail": songthumbnail,
       "releasedTimestamp": DateTime.now(),
       "audioUrl": audioUrl,
       "performedBy": performedBy,
@@ -87,11 +77,12 @@ class Admin extends ChangeNotifier {
       "source": source,
       "numberOfPlays": 0,
       "artistId": artistIdInside,
-      "categories": categories,
+      "genres": genres,
       "lyrics": lyrics,
-      "album": albumInfo
+      "album": albumInfo,
+      "thumbnailUrl": thumbnailUrl
     }).then((doc) {
-      print("Perfect");
+      print("New song added");
     }).catchError((e) {
       print(e);
     });
@@ -105,12 +96,11 @@ class Admin extends ChangeNotifier {
       "albumId": ref.documentID,
       "artistId": artistId,
       "albumTitle": title,
-      "albumIndex": title[0],
       "releasedTime": DateTime.now(),
       "copyrightOwnership": copyrightOwnership,
       "albumThumbnail": albumThumbnail,
     }).then((doc) {
-      print("Perfect!");
+      print("New album added");
     }).catchError((e) {
       print(e);
     });

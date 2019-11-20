@@ -51,9 +51,10 @@
     "source": "String",
     "numberOfPlays": "Integer",
     "artistId": "String",
-    "categories": [
+    "genres": [
       {
-        "categoryId": "String"
+        "genreId": "String",
+        "thumbnailUrl": "String"
       }
     ],
     "lyrics": [
@@ -65,12 +66,13 @@
     ],
     "album": {
       "albumId": "String"
-    }
+    },
+    "thumbnailUrl": "String"
   },
   "albums": {
+    "albumId": "String",
     "artistId": "String",
     "albumTitle": "String",
-    "albumIndex": "Character",
     "releasedTime": "Timestamp",
     "copyrightOwnership": "String",
     "albumThumbnail": "String url/image",

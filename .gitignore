@@ -2,6 +2,8 @@
 
 *.plist
 
+.flutter-plugins
+
 ios/
 android/
 build/

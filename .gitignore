@@ -4,6 +4,8 @@
 
 .flutter-plugins
 
+*.code-workspace
+
 ios/
 android/
 build/

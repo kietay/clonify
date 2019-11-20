@@ -14,7 +14,7 @@ class Admin extends ChangeNotifier {
     }).then((doc) {
       print("New artist added");
     }).catchError((e) {
-      print(e);
+      print("Could not add new artist:" + e);
     });
   }
 
@@ -28,7 +28,7 @@ class Admin extends ChangeNotifier {
     }).then((doc) {
       print("Category added");
     }).catchError((e) {
-      print(e);
+      print("Could not add new genre" + e);
     });
   }
 

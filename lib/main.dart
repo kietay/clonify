@@ -3,7 +3,7 @@ import 'package:clonify/components/auth.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'Spotify Clone',
+    title: 'Clonify',
     theme: ThemeData(
         fontFamily: 'Proxima Nova',
         brightness: Brightness.dark,

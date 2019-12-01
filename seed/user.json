@@ -1,0 +1,36 @@
+{
+    "forkedPlaylistIds": [
+        "12345"
+    ],
+    "likedSongIds": [
+        "String"
+    ],
+    "name": "Test User",
+    "playlistHistory": [
+        {
+            "lastPlayed": "2019-11-19T05:00:00Z",
+            "playlistId": "12345"
+        }
+    ],
+    "premiumStatus": true,
+    "songHistory": [
+        {
+            "lastPlayed": "2019-11-19T05:00:00Z",
+            "songId": "12345"
+        }
+    ],
+    "userId": "JHBJvryK18ernglofJ6vtZrQ8S93",
+    "usersPlaylists": [
+        {
+            "playlistId": "12345",
+            "playlistName": "Test playlist",
+            "public": "Boolean",
+            "songs": [
+                {
+                    "songId": "String",
+                    "timeAdded": "2019-11-19T05:00:00Z"
+                }
+            ]
+        }
+    ]
+}

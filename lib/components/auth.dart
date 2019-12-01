@@ -13,35 +13,45 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future onloadDecider() async {
+  Future chooseLandingPage() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    if(user == null){
-      print("No User");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Material(
-        child: ChangeNotifierProvider(
-          builder: (_)=>SessionManagement(),
-          child: FirebaseSession(),
-        ),
-      )));
-    }else{
-      print("Current User : "+user.uid);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Material(
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(builder: (_)=>SessionManagement(),),
-          ],
-          child: SpotifyHome(),
-        ),
-      )));
+    if (user == null) {
+      print("User not logged in");
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Material(
+                    child: ChangeNotifierProvider(
+                      builder: (_) => SessionManagement(),
+                      child: FirebaseSession(),
+                    ),
+                  )));
+    } else {
+      print("Current User: " + user.uid);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Material(
+                    child: MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          builder: (_) => SessionManagement(),
+                        ),
+                      ],
+                      child: SpotifyHome(),
+                    ),
+                  )));
     }
   }
+
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 2), (){
-      onloadDecider();
+    Future.delayed(Duration(seconds: 2), () {
+      chooseLandingPage();
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,21 +66,19 @@ class FirebaseSession extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
             colors: [
               Color.fromRGBO(255, 0, 254, 100),
               Color.fromRGBO(51, 51, 153, 100),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-          )
-        ),
-        child: AuthUI(),
-      )
-    );
+          )),
+          child: AuthUI(),
+        ));
   }
 }
 
@@ -82,88 +90,113 @@ class AuthUI extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Image.asset('./images/spotify_logo_banner_black.png', height: MediaQuery.of(context).size.height*0.12,),
-          Text("Millions of songs. \n Free on Spotify.", style: TextStyle(
-            fontFamily: 'Proxima Nova',
-            fontSize: 30.0,
-            fontWeight: FontWeight.w900,
-          ),),
+          Image.asset(
+            './images/spotify_logo_banner_black.png',
+            height: MediaQuery.of(context).size.height * 0.12,
+          ),
+          Text(
+            "Millions of songs. \n Free on Clonify.",
+            style: TextStyle(
+              fontFamily: 'Proxima Nova',
+              fontSize: 30.0,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
           Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("Continue with", style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 18.0,
-                ),),
-                SizedBox(
-                  height: 10.0,
-                ),
-                MaterialButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignupOrLogin()));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                    margin: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.mail_outline, color: Colors.black,),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text("EMAIL", style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),),
-                      ],
-                    ),
-                  )
+                Text(
+                  "Continue with",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18.0,
+                  ),
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
                 MaterialButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Material(
-                      child: ChangeNotifierProvider(
-                        builder: (_)=>Admin(),
-                        child: SpotifyAdmin(),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignupOrLogin()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(100.0),
                       ),
-                    )));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                    margin: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.mail_outline, color: Colors.black,),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text("Admin", style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),),
-                      ],
-                    ),
-                  )
-                )
+                      margin: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.mail_outline,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            "EMAIL",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+                SizedBox(
+                  height: 10.0,
+                ),
+                MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Material(
+                                    child: ChangeNotifierProvider(
+                                      builder: (_) => Admin(),
+                                      child: SpotifyAdmin(),
+                                    ),
+                                  )));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(100.0),
+                      ),
+                      margin: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.mail_outline,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            "Admin",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))
               ],
             ),
           ),
@@ -179,14 +212,13 @@ class SignupOrLogin extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color.fromRGBO(255, 0, 254, 100),
-              Color.fromRGBO(51, 51, 153, 100),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          )
-        ),
+        colors: [
+          Color.fromRGBO(255, 0, 254, 100),
+          Color.fromRGBO(51, 51, 153, 100),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      )),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -199,24 +231,34 @@ class SignupOrLogin extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text("Email", style: TextStyle(
-                fontSize: 30.0,
-                fontFamily: 'Proxima Nova Bold',
-              ),),
+              Text(
+                "Email",
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontFamily: 'Proxima Nova Bold',
+                ),
+              ),
               SizedBox(
                 height: 20.0,
               ),
               MaterialButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Material(
-                    child: MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(builder: (_)=>CreateUserAccount(),),
-                        ChangeNotifierProvider(builder: (_)=>ShowCustomAlertDialog(),),
-                      ],
-                      child: CreateAccount(),
-                    ),
-                  )));
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(
+                                child: MultiProvider(
+                                  providers: [
+                                    ChangeNotifierProvider(
+                                      builder: (_) => CreateUserAccount(),
+                                    ),
+                                    ChangeNotifierProvider(
+                                      builder: (_) => ShowCustomAlertDialog(),
+                                    ),
+                                  ],
+                                  child: CreateAccount(),
+                                ),
+                              )));
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -226,10 +268,13 @@ class SignupOrLogin extends StatelessWidget {
                     border: Border.all(color: Colors.grey, width: 2),
                     borderRadius: BorderRadius.circular(100.0),
                   ),
-                  child: Text("SIGN UP FREE", style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
-                  ),),
+                  child: Text(
+                    "SIGN UP FREE",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0,
+                    ),
+                  ),
                 ),
               ),
               Container(
@@ -242,31 +287,41 @@ class SignupOrLogin extends StatelessWidget {
                       alignment: Alignment.center,
                       color: Colors.grey,
                       height: 2.0,
-                      width: MediaQuery.of(context).size.width*0.35,
+                      width: MediaQuery.of(context).size.width * 0.35,
                     ),
-                    Text("OR", style: TextStyle(
-                      color: Colors.grey,
-                    ),),
+                    Text(
+                      "OR",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                     Container(
                       alignment: Alignment.center,
                       color: Colors.grey,
                       height: 2.0,
-                      width: MediaQuery.of(context).size.width*0.35,
+                      width: MediaQuery.of(context).size.width * 0.35,
                     )
                   ],
                 ),
               ),
               MaterialButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Material(
-                    child: MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(builder: (_)=>LoginLogic(),),
-                        ChangeNotifierProvider(builder: (_)=>ShowCustomAlertDialog(),),
-                      ],
-                      child: LoginPage(),
-                    ),
-                  )));
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(
+                                child: MultiProvider(
+                                  providers: [
+                                    ChangeNotifierProvider(
+                                      builder: (_) => LoginLogic(),
+                                    ),
+                                    ChangeNotifierProvider(
+                                      builder: (_) => ShowCustomAlertDialog(),
+                                    ),
+                                  ],
+                                  child: LoginPage(),
+                                ),
+                              )));
                 },
                 child: Container(
                   width: 300.0,
@@ -276,10 +331,13 @@ class SignupOrLogin extends StatelessWidget {
                     border: Border.all(color: Colors.grey, width: 2),
                     borderRadius: BorderRadius.circular(100.0),
                   ),
-                  child: Text("LOG IN", style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
-                  ),),
+                  child: Text(
+                    "LOG IN",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -289,7 +347,6 @@ class SignupOrLogin extends StatelessWidget {
     );
   }
 }
-
 
 class CreateAccount extends StatelessWidget {
   @override
@@ -302,9 +359,12 @@ class CreateAccount extends StatelessWidget {
         centerTitle: true,
         elevation: 0.0,
         backgroundColor: Colors.black,
-        title: Text("Create account", style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),),
+        title: Text(
+          "Create account",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: PageView(
         controller: sessionObj.pctrl,
@@ -317,22 +377,24 @@ class CreateAccount extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("What's your email?",style: TextStyle(
-                  fontSize: 30.0,
-                  fontFamily: 'Proxima Nova Bold',
-                ),),
+                Text(
+                  "What's your email?",
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontFamily: 'Proxima Nova Bold',
+                  ),
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
                 TextFormField(
                   autofocus: false,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(16.0),
-                    fillColor: Colors.grey,
-                    filled: true,
-                    border: OutlineInputBorder()
-                  ),
-                  onChanged: (String text){
+                      contentPadding: EdgeInsets.all(16.0),
+                      fillColor: Colors.grey,
+                      filled: true,
+                      border: OutlineInputBorder()),
+                  onChanged: (String text) {
                     sessionObj.emailNextButtonListener(text);
                     sessionObj.email = text;
                   },
@@ -343,25 +405,33 @@ class CreateAccount extends StatelessWidget {
                 Center(
                   child: RaisedButton(
                     padding: EdgeInsets.fromLTRB(45.0, 15.0, 45.0, 15.0),
-                    onPressed: (){
+                    onPressed: () {
                       FocusScope.of(context).unfocus();
-                      sessionObj.emailNextEnabled ? sessionObj.pctrl.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeIn) : uiComponents.showCustomDialog(context, "Please Enter your Email");
+                      sessionObj.emailNextEnabled
+                          ? sessionObj.pctrl.nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeIn)
+                          : uiComponents.showCustomDialog(
+                              context, "Please Enter your Email");
                     },
-                    color: sessionObj.emailNextEnabled ? Colors.white : Colors.grey,
+                    color: sessionObj.emailNextEnabled
+                        ? Colors.white
+                        : Colors.grey,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100.0),
                     ),
-                    child: Text("NEXT", style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontFamily: 'Proxima Nova Bold'
-                    ),),
+                    child: Text(
+                      "NEXT",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          fontFamily: 'Proxima Nova Bold'),
+                    ),
                   ),
                 )
               ],
             ),
           ),
-
           Container(
             padding: EdgeInsets.all(10.0),
             alignment: Alignment.topLeft,
@@ -369,10 +439,13 @@ class CreateAccount extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("Create a Password",style: TextStyle(
-                  fontSize: 30.0,
-                  fontFamily: 'Proxima Nova Bold',
-                ),),
+                Text(
+                  "Create a Password",
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontFamily: 'Proxima Nova Bold',
+                  ),
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -380,18 +453,25 @@ class CreateAccount extends StatelessWidget {
                   obscureText: !sessionObj.showPassword,
                   autofocus: false,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(16.0),
-                    fillColor: Colors.grey,
-                    filled: true,
-                    border: OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      onPressed: (){
-                        sessionObj.showPassFun();
-                      },
-                      icon: sessionObj.showPassword ? Icon(Icons.visibility, color: Colors.white,) : Icon(Icons.visibility_off , color: Colors.white,),
-                    )
-                  ),
-                  onChanged: (String text){
+                      contentPadding: EdgeInsets.all(16.0),
+                      fillColor: Colors.grey,
+                      filled: true,
+                      border: OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          sessionObj.showPassFun();
+                        },
+                        icon: sessionObj.showPassword
+                            ? Icon(
+                                Icons.visibility,
+                                color: Colors.white,
+                              )
+                            : Icon(
+                                Icons.visibility_off,
+                                color: Colors.white,
+                              ),
+                      )),
+                  onChanged: (String text) {
                     sessionObj.passNextButtonListener(text);
                     sessionObj.password = text;
                   },
@@ -402,25 +482,32 @@ class CreateAccount extends StatelessWidget {
                 Center(
                   child: RaisedButton(
                     padding: EdgeInsets.fromLTRB(45.0, 15.0, 45.0, 15.0),
-                    onPressed: (){
+                    onPressed: () {
                       FocusScope.of(context).unfocus();
-                      sessionObj.passNextEnabled ? sessionObj.pctrl.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeIn) : uiComponents.showCustomDialog(context, "Password must of atleast 8 Charecters") ;
+                      sessionObj.passNextEnabled
+                          ? sessionObj.pctrl.nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeIn)
+                          : uiComponents.showCustomDialog(
+                              context, "Password must of atleast 8 Charecters");
                     },
-                    color: sessionObj.passNextEnabled ? Colors.white : Colors.grey,
+                    color:
+                        sessionObj.passNextEnabled ? Colors.white : Colors.grey,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100.0),
                     ),
-                    child: Text("NEXT", style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontFamily: 'Proxima Nova Bold'
-                    ),),
+                    child: Text(
+                      "NEXT",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          fontFamily: 'Proxima Nova Bold'),
+                    ),
                   ),
                 )
               ],
             ),
           ),
-
           Container(
             padding: EdgeInsets.all(10.0),
             alignment: Alignment.topLeft,
@@ -428,10 +515,13 @@ class CreateAccount extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("What's your name?",style: TextStyle(
-                  fontSize: 30.0,
-                  fontFamily: 'Proxima Nova Bold',
-                ),),
+                Text(
+                  "What's your name?",
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontFamily: 'Proxima Nova Bold',
+                  ),
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -443,7 +533,7 @@ class CreateAccount extends StatelessWidget {
                     filled: true,
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (String text){
+                  onChanged: (String text) {
                     sessionObj.nameNextButtonListener(text);
                     sessionObj.name = text;
                   },
@@ -456,22 +546,32 @@ class CreateAccount extends StatelessWidget {
                   height: 20.0,
                 ),
                 Center(
-                  child: sessionObj.isCreatingAccount ? CircularProgressIndicator() : RaisedButton(
-                    padding: EdgeInsets.fromLTRB(45.0, 15.0, 45.0, 15.0),
-                    onPressed: (){
-                      FocusScope.of(context).unfocus();
-                      sessionObj.nameNextEnabled ? sessionObj.signUp(context ,sessionObj.name ,sessionObj.email, sessionObj.password) : uiComponents.showCustomDialog(context, "Name should be atleast 6 Charecters");
-                    },
-                    color: sessionObj.nameNextEnabled ? Colors.white : Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                    child: Text("Create", style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontFamily: 'Proxima Nova Bold'
-                    ),),
-                  ),
+                  child: sessionObj.isCreatingAccount
+                      ? CircularProgressIndicator()
+                      : RaisedButton(
+                          padding: EdgeInsets.fromLTRB(45.0, 15.0, 45.0, 15.0),
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+                            sessionObj.nameNextEnabled
+                                ? sessionObj.signUp(context, sessionObj.name,
+                                    sessionObj.email, sessionObj.password)
+                                : uiComponents.showCustomDialog(context,
+                                    "Name should be atleast 6 Charecters");
+                          },
+                          color: sessionObj.nameNextEnabled
+                              ? Colors.white
+                              : Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          child: Text(
+                            "Create",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.0,
+                                fontFamily: 'Proxima Nova Bold'),
+                          ),
+                        ),
                 ),
                 SizedBox(
                   height: 20.0,
@@ -481,26 +581,28 @@ class CreateAccount extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text("By creating an account, you agree to Spotify's Terms of Service.", textAlign: TextAlign.center,),
+                      Text(
+                        "By creating an account, you agree to Spotify's Terms of Service.",
+                        textAlign: TextAlign.center,
+                      ),
                       SizedBox(
                         height: 20.0,
                       ),
-                      Text("To learn more about how Spotify collects, uses, shares and protects your personal data please read Spotify's Privacy Policy", textAlign: TextAlign.center,),
+                      Text(
+                        "To learn more about how Spotify collects, uses, shares and protects your personal data please read Spotify's Privacy Policy",
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 )
               ],
             ),
           ),
-
-
-
         ],
       ),
     );
   }
 }
-
 
 class LoginPage extends StatelessWidget {
   @override
@@ -519,36 +621,40 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("Email or userame", style: TextStyle(
-              fontSize: 30.0,
-              fontFamily: 'Proxima Nova Bold',
-            ),),
+            Text(
+              "Email or userame",
+              style: TextStyle(
+                fontSize: 30.0,
+                fontFamily: 'Proxima Nova Bold',
+              ),
+            ),
             SizedBox(
               height: 5.0,
             ),
             TextFormField(
               autofocus: false,
               decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(16.0),
-              fillColor: Colors.grey,
-              filled: true,
+                contentPadding: EdgeInsets.all(16.0),
+                fillColor: Colors.grey,
+                filled: true,
                 border: OutlineInputBorder(),
               ),
-              onChanged: (String text){
+              onChanged: (String text) {
                 loginLogic.email = text;
-                loginLogic.loginButtonListener(loginLogic.email, loginLogic.password);
+                loginLogic.loginButtonListener(
+                    loginLogic.email, loginLogic.password);
               },
             ),
-
             SizedBox(
               height: 30.0,
             ),
-
-
-            Text("Password", style: TextStyle(
-              fontSize: 30.0,
-              fontFamily: 'Proxima Nova Bold',
-            ),),
+            Text(
+              "Password",
+              style: TextStyle(
+                fontSize: 30.0,
+                fontFamily: 'Proxima Nova Bold',
+              ),
+            ),
             SizedBox(
               height: 5.0,
             ),
@@ -556,56 +662,75 @@ class LoginPage extends StatelessWidget {
               obscureText: !loginLogic.showPassword,
               autofocus: false,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(16.0),
-                fillColor: Colors.grey,
-                filled: true,
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  onPressed: (){
-                    loginLogic.showPassFun();
-                  },
-                  icon: loginLogic.showPassword ? Icon(Icons.visibility, color: Colors.white,) : Icon(Icons.visibility_off , color: Colors.white,),
-                )
-              ),
-              onChanged: (String text){
-                  loginLogic.password = text;
-                  loginLogic.loginButtonListener(loginLogic.email, loginLogic.password);
-                },
-              ),
-
-              SizedBox(
-                height: 20.0,
-              ),
-
-            Center(
-                  child: loginLogic.isAuthenticating ? CircularProgressIndicator() : RaisedButton(
-                    padding: EdgeInsets.fromLTRB(45.0, 15.0, 45.0, 15.0),
-                    onPressed: (){
-                      FocusScope.of(context).unfocus();
-                      loginLogic.loginButton ? loginLogic.loginIn(context, loginLogic.email, loginLogic.password) : uiComponents.showCustomDialog(context, "Enter your Email and Password") ;
+                  contentPadding: EdgeInsets.all(16.0),
+                  fillColor: Colors.grey,
+                  filled: true,
+                  border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      loginLogic.showPassFun();
                     },
-                    color: loginLogic.loginButton ? Colors.white : Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100.0),
+                    icon: loginLogic.showPassword
+                        ? Icon(
+                            Icons.visibility,
+                            color: Colors.white,
+                          )
+                        : Icon(
+                            Icons.visibility_off,
+                            color: Colors.white,
+                          ),
+                  )),
+              onChanged: (String text) {
+                loginLogic.password = text;
+                loginLogic.loginButtonListener(
+                    loginLogic.email, loginLogic.password);
+              },
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Center(
+              child: loginLogic.isAuthenticating
+                  ? CircularProgressIndicator()
+                  : RaisedButton(
+                      padding: EdgeInsets.fromLTRB(45.0, 15.0, 45.0, 15.0),
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        loginLogic.loginButton
+                            ? loginLogic.loginIn(
+                                context, loginLogic.email, loginLogic.password)
+                            : uiComponents.showCustomDialog(
+                                context, "Enter your Email and Password");
+                      },
+                      color:
+                          loginLogic.loginButton ? Colors.white : Colors.grey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100.0),
+                      ),
+                      child: Text(
+                        "LOG IN",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                            fontFamily: 'Proxima Nova Bold'),
+                      ),
                     ),
-                    child: Text("LOG IN", style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontFamily: 'Proxima Nova Bold'
-                    ),),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 30.0,
-                ),
-
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
             Center(
               child: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Material(
-                    child: ChangeNotifierProvider(builder: (context)=>ForgotPassword(), child: PasswordRecovery(),),
-                  )));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(
+                                child: ChangeNotifierProvider(
+                                  builder: (context) => ForgotPassword(),
+                                  child: PasswordRecovery(),
+                                ),
+                              )));
                 },
                 child: Container(
                   padding: EdgeInsets.fromLTRB(30.0, 7.0, 30.0, 7.0),
@@ -613,21 +738,22 @@ class LoginPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100.0),
                     border: Border.all(color: Colors.grey, width: 1.0),
                   ),
-                  child: Text("FORGOT YOUR PASSWORD?", style: TextStyle(
-                    fontFamily: 'Proxima Nova Bold',
-                    fontSize: 14.0,
-                  ),),
+                  child: Text(
+                    "FORGOT YOUR PASSWORD?",
+                    style: TextStyle(
+                      fontFamily: 'Proxima Nova Bold',
+                      fontSize: 14.0,
+                    ),
+                  ),
                 ),
               ),
             ),
-                        
           ],
         ),
       ),
     );
   }
 }
-
 
 class PasswordRecovery extends StatelessWidget {
   @override
@@ -638,9 +764,12 @@ class PasswordRecovery extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0.0,
-        title: Text("Forgot your password?", style: TextStyle(
-          fontFamily: 'Proxima Nova Bold',
-        ),),
+        title: Text(
+          "Forgot your password?",
+          style: TextStyle(
+            fontFamily: 'Proxima Nova Bold',
+          ),
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -649,10 +778,13 @@ class PasswordRecovery extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("Email or username", style: TextStyle(
-              fontFamily: 'Proxima Nova Bold',
-              fontSize: 35.0,
-            ),),
+            Text(
+              "Email or username",
+              style: TextStyle(
+                fontFamily: 'Proxima Nova Bold',
+                fontSize: 35.0,
+              ),
+            ),
             SizedBox(
               height: 10.0,
             ),
@@ -666,7 +798,7 @@ class PasswordRecovery extends StatelessWidget {
                 border: OutlineInputBorder(),
                 disabledBorder: InputBorder.none,
               ),
-              onChanged: (String text){
+              onChanged: (String text) {
                 forgotObj.buttonActivateListener(text);
               },
             ),
@@ -684,17 +816,27 @@ class PasswordRecovery extends StatelessWidget {
               child: RaisedButton(
                 padding: EdgeInsets.fromLTRB(35.0, 20.0, 35.0, 20.0),
                 color: forgotObj.getLinkEnable ? Colors.white : Colors.grey,
-                onPressed: ()async{
-                  forgotObj.getLinkEnable ? (await forgotObj.sendEmail(context ,forgotObj.email)) ? forgotObj.showCustomAlertDialog.showCustomDialog(context, "An Email was sent to you to reset your Password, Check your inbox.") : print("Something went wrong") : forgotObj.showCustomAlertDialog.showCustomDialog(context, "Please enter valid Email");
+                onPressed: () async {
+                  forgotObj.getLinkEnable
+                      ? (await forgotObj.sendEmail(context, forgotObj.email))
+                          ? forgotObj.showCustomAlertDialog.showCustomDialog(
+                              context,
+                              "An Email was sent to you to reset your Password, Check your inbox.")
+                          : print("Something went wrong")
+                      : forgotObj.showCustomAlertDialog.showCustomDialog(
+                          context, "Please enter valid Email");
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100.0),
                 ),
-                child: Text("GET LINK", style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  fontFamily: 'Proxima Nova Bold',
-                ),),
+                child: Text(
+                  "GET LINK",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontFamily: 'Proxima Nova Bold',
+                  ),
+                ),
               ),
             )
           ],

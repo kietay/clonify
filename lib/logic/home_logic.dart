@@ -26,26 +26,33 @@ class RecentlyPlayedLogic extends ChangeNotifier {
   }
 
   Future<List<RecentlyPlayedItem>> getSongHistory() async {
-    print("Getting song history for user");
-
     final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
+
+    print("Getting song history for user: ${firebaseUser.uid}");
     QuerySnapshot qsnap = await Firestore.instance
         .collection("users")
         .document(firebaseUser.uid)
         .collection("songHistory")
         .getDocuments();
 
-    final fetchedSongs = await Future.wait(qsnap.documents.map((elem) =>
-        Firestore.instance.collection("songs").document(elem['songId']).get()));
+    print(qsnap.documents[0].data);
 
-    return fetchedSongs
-        .map((fdoc) => RecentlyPlayedItem(
-            id: fdoc.data['songId'],
-            lastPlayed: fdoc.data['lastPlayed'],
-            thumbnailUrl: fdoc.data['thumbnailUrl'],
-            type: 'song',
-            title: fdoc.data['songTitle']))
-        .toList();
+    final fetchedSongs = await Future.wait(qsnap.documents.map((elem) async {
+      final songDoc = await Firestore.instance
+          .collection("songs")
+          .document(elem.data['songId'])
+          .get();
+
+      return RecentlyPlayedItem(
+          id: songDoc.data['songId'],
+          lastPlayed: DateTime.fromMillisecondsSinceEpoch(
+              elem['lastPlayed'].seconds * 1000),
+          thumbnailUrl: songDoc.data['thumbnailUrl'],
+          type: 'song',
+          title: songDoc.data['songTitle']);
+    }));
+
+    return fetchedSongs.toList();
   }
 
   Future<List<RecentlyPlayedItem>> getPlaylistHistory() async {

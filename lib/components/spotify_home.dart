@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/logic/auth_logic.dart';
 import 'package:clonify/logic/home_logic.dart';
+import 'package:firebase_storage_image/firebase_storage_image.dart';
 
 class SpotifyHome extends StatelessWidget {
   @override
@@ -132,7 +133,7 @@ class RecentlyPlayed extends StatelessWidget {
                                   image: DecorationImage(
                                 image: recentlyPlayed.recentlyPlayed[i].type ==
                                         "song"
-                                    ? NetworkImage(recentlyPlayed
+                                    ? FirebaseStorageImage(recentlyPlayed
                                         .recentlyPlayed[i].thumbnailUrl)
                                     : AssetImage(recentlyPlayed
                                         .recentlyPlayed[i].thumbnailUrl),

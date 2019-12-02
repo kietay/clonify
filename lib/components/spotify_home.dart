@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:clonify/logic/auth_logic.dart';
 import 'package:clonify/logic/home_logic.dart';
 import 'package:firebase_storage_image/firebase_storage_image.dart';
+import 'package:clonify/components/admin.dart';
 
 class SpotifyHome extends StatelessWidget {
   @override
@@ -10,12 +11,42 @@ class SpotifyHome extends StatelessWidget {
     final sessionObject = Provider.of<SessionManagement>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Clonify"),
-        backgroundColor: Colors.green.withOpacity(0.5),
-        bottomOpacity: 1,
-        textTheme: const TextTheme(
-            title: TextStyle(fontFamily: 'Proxima Nova Bold', fontSize: 30.0)),
-      ),
+          title: const Text("Clonify"),
+          backgroundColor: Colors.green.withOpacity(0.5),
+          bottomOpacity: 1,
+          textTheme: const TextTheme(
+              title:
+                  TextStyle(fontFamily: 'Proxima Nova Bold', fontSize: 30.0)),
+          leading: GestureDetector(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Icon(Icons.person),
+              ),
+            ),
+            onTap: () {
+              print("Person clicked");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SpotifyAdmin()),
+              );
+            },
+          ),
+          actions: [
+            GestureDetector(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(Icons.settings),
+                ),
+              ),
+              onTap: () {
+                print("Settings clicked");
+              },
+            ),
+          ]),
       bottomNavigationBar: Container(
         height: 60.0,
         color: Colors.grey.withOpacity(0.2),
@@ -23,14 +54,18 @@ class SpotifyHome extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.home),
-                Text("Home"),
-              ],
-            ),
+            GestureDetector(
+                onTap: () {
+                  print("You've been clicked");
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.home),
+                    Text("Home"),
+                  ],
+                )),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,8 +86,8 @@ class SpotifyHome extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Icon(Icons.person_outline),
-                Text("Premium"),
+                Icon(Icons.lock),
+                Text("Admin"),
               ],
             ),
           ],
@@ -106,17 +141,8 @@ class RecentlyPlayed extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          InkWell(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Icon(Icons.settings),
-              ),
-            ),
-          ),
           Padding(
-            padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 10.0),
+            padding: EdgeInsets.fromLTRB(10.0, 15.0, 0.0, 10.0),
             child: Text(
               "Recently played",
               style: TextStyle(fontFamily: 'Proxima Nova Bold', fontSize: 30.0),

@@ -87,6 +87,17 @@ class LoginLogic extends ChangeNotifier {
   }
 }
 
+class LogoutLogic extends ChangeNotifier {
+  Future<bool> logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+}
+
 class CreateUserAccount extends ChangeNotifier {
   final PageController pctrl = PageController(initialPage: 0);
   bool emailNextEnabled = false;

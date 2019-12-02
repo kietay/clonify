@@ -4,6 +4,7 @@ import 'package:clonify/logic/auth_logic.dart';
 import 'package:clonify/logic/home_logic.dart';
 import 'package:firebase_storage_image/firebase_storage_image.dart';
 import 'package:clonify/components/admin.dart';
+import 'package:clonify/components/user.dart';
 
 class SpotifyHome extends StatelessWidget {
   @override
@@ -29,7 +30,7 @@ class SpotifyHome extends StatelessWidget {
               print("Person clicked");
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SpotifyAdmin()),
+                MaterialPageRoute(builder: (context) => UserAdmin()),
               );
             },
           ),
@@ -66,30 +67,45 @@ class SpotifyHome extends StatelessWidget {
                     Text("Home"),
                   ],
                 )),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.search),
-                Text("Search"),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.library_music),
-                Text("Library"),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.lock),
-                Text("Admin"),
-              ],
-            ),
+            GestureDetector(
+                onTap: () {
+                  print("You've been clicked");
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.search),
+                    Text("Search"),
+                  ],
+                )),
+            GestureDetector(
+                onTap: () {
+                  print("You've been clicked");
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.library_music),
+                    Text("Library"),
+                  ],
+                )),
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SpotifyAdmin()),
+                  );
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.lock),
+                    Text("Admin"),
+                  ],
+                )),
           ],
         ),
       ),

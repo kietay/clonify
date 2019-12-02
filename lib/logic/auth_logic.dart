@@ -23,8 +23,10 @@ class SessionManagement extends ChangeNotifier {
   Future<bool> logout() async {
     try {
       await FirebaseAuth.instance.signOut();
+      print("Logged out!");
       return true;
     } catch (e) {
+      print("Could not log out!");
       return false;
     }
   }

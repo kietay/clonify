@@ -6,10 +6,16 @@ import 'package:clonify/logic/auth_logic.dart';
 class UserAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final sessionObject = Provider.of<SessionManagement>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text("User admin"),
         ),
-        body: Container(child: Text("Hi mate")));
+        body: IconButton(
+          icon: Icon(Icons.gavel),
+          onPressed: () {
+            sessionObject.logout();
+          },
+        ));
   }
 }

@@ -30,7 +30,12 @@ class SpotifyHome extends StatelessWidget {
               print("Person clicked");
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UserAdmin()),
+                MaterialPageRoute(
+                    builder: (context) => MultiProvider(providers: [
+                          ChangeNotifierProvider(
+                            builder: (_) => SessionManagement(),
+                          ),
+                        ], child: UserAdmin())),
               );
             },
           ),

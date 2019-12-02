@@ -2,6 +2,7 @@
 #
 *.xml
 *.iml
+*.DS_store
 
 *.plist
 

@@ -35,8 +35,6 @@ class RecentlyPlayedLogic extends ChangeNotifier {
         .collection("songHistory")
         .getDocuments();
 
-    print(qsnap.documents[0].data);
-
     final fetchedSongs = await Future.wait(qsnap.documents.map((elem) async {
       final songDoc = await Firestore.instance
           .collection("songs")

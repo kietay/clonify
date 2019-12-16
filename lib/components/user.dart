@@ -13,9 +13,13 @@ class UserAdmin extends StatelessWidget {
         ),
         body: IconButton(
           icon: Icon(Icons.gavel),
-          onPressed: () {
-            sessionObject.logout();
+          onPressed: () async {
+            var loggedOut = await sessionObject.logout();
+            if (loggedOut) {
+              print(Navigator.canPop(context));
+            }
           },
         ));
+    // todo pull back to login screen
   }
 }

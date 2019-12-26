@@ -21,7 +21,7 @@ class SpotifyAdmin extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (contex) => Material(
                                 child: ChangeNotifierProvider(
-                                  builder: (_) => Admin(),
+                                  create: (_) => Admin(),
                                   child: AddArtist(),
                                 ),
                               )));

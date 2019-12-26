@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/logic/auth.dart';
+import 'package:clonify/components/auth/auth_ui.dart';
 
 class UserAdmin extends StatelessWidget {
   @override
@@ -17,9 +18,10 @@ class UserAdmin extends StatelessWidget {
             var loggedOut = await sessionObject.logout();
             if (loggedOut) {
               print(Navigator.canPop(context));
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => AuthUI()));
             }
           },
         ));
-    // todo pull back to login screen
   }
 }

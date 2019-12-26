@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/logic/homedart';
+import 'package:clonify/logic/home.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class RecentlyPlayed extends StatelessWidget {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/logic/auth_logic.dart';
-import 'package:clonify/logic/home_logic.dart';
-// this package is currently broken
-// import 'package:firebase_storage_image/firebase_storage_image.dart';
+import 'package:clonify/logic/auth.dart';
+import 'package:clonify/logic/home.dart';
 import 'package:clonify/components/admin.dart';
 import 'package:clonify/components/user.dart';
 import 'package:clonify/components/recently_played.dart';

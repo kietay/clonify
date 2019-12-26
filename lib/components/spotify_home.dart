@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/logic/auth_logic.dart';
 import 'package:clonify/logic/home_logic.dart';
-import 'package:firebase_storage_image/firebase_storage_image.dart';
+// this package is currently broken
+// import 'package:firebase_storage_image/firebase_storage_image.dart';
 import 'package:clonify/components/admin.dart';
 import 'package:clonify/components/user.dart';
 
@@ -16,8 +17,7 @@ class SpotifyHome extends StatelessWidget {
           backgroundColor: Colors.green.withOpacity(0.5),
           bottomOpacity: 1,
           textTheme: const TextTheme(
-              title:
-                  TextStyle(fontFamily: 'Proxima Nova Bold', fontSize: 30.0)),
+              title: TextStyle(fontFamily: 'ProximaNovaBold', fontSize: 30.0)),
           leading: GestureDetector(
             child: Align(
               alignment: Alignment.centerRight,
@@ -166,7 +166,7 @@ class RecentlyPlayed extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(10.0, 15.0, 0.0, 10.0),
             child: Text(
               "Recently played",
-              style: TextStyle(fontFamily: 'Proxima Nova Bold', fontSize: 30.0),
+              style: TextStyle(fontFamily: 'ProximaNovaBold', fontSize: 30.0),
             ),
           ),
           !recentlyPlayed.historyFetched
@@ -180,7 +180,7 @@ class RecentlyPlayed extends StatelessWidget {
                     primary: false,
                     scrollDirection: Axis.horizontal,
                     itemCount: recentlyPlayed.recentlyPlayed.length,
-                    itemBuilder: (context, i) {
+                    itemBuilder: (context, song) {
                       return Container(
                         margin: EdgeInsets.all(15.0),
                         child: Column(
@@ -192,12 +192,12 @@ class RecentlyPlayed extends StatelessWidget {
                               width: MediaQuery.of(context).size.height * 0.18,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                image: recentlyPlayed.recentlyPlayed[i].type ==
-                                        "song"
-                                    ? FirebaseStorageImage(recentlyPlayed
-                                        .recentlyPlayed[i].thumbnailUrl)
-                                    : AssetImage(recentlyPlayed
-                                        .recentlyPlayed[i].thumbnailUrl),
+                                // image: AssetImage(recentlyPlayed
+                                //     .recentlyPlayed[i].thumbnailUrl),
+                                // image: FirebaseStorageImage(recentlyPlayed
+                                //     .recentlyPlayed[song].thumbnailUrl),
+                                image: NetworkImage(recentlyPlayed
+                                    .recentlyPlayed[song].thumbnailUrl),
                                 fit: BoxFit.cover,
                               )),
                             ),
@@ -205,9 +205,9 @@ class RecentlyPlayed extends StatelessWidget {
                               height: 10.0,
                             ),
                             Text(
-                              recentlyPlayed.recentlyPlayed[i].title,
+                              recentlyPlayed.recentlyPlayed[song].title,
                               style: TextStyle(
-                                fontFamily: 'Proxima Nova Bold',
+                                fontFamily: 'ProximaNovaBold',
                                 fontSize: 18.0,
                               ),
                             ),

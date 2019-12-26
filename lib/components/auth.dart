@@ -97,7 +97,7 @@ class AuthUI extends StatelessWidget {
           Text(
             "Millions of songs. \n Free on Clonify.",
             style: TextStyle(
-              fontFamily: 'Proxima Nova',
+              fontFamily: 'ProximaNova',
               fontSize: 30.0,
               fontWeight: FontWeight.w900,
             ),
@@ -143,7 +143,7 @@ class AuthUI extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            "EMAIL",
+                            "Email",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -235,7 +235,7 @@ class SignupOrLogin extends StatelessWidget {
                 "Email",
                 style: TextStyle(
                   fontSize: 30.0,
-                  fontFamily: 'Proxima Nova Bold',
+                  fontFamily: 'ProximaNovaBold',
                 ),
               ),
               SizedBox(
@@ -381,7 +381,7 @@ class CreateAccount extends StatelessWidget {
                   "What's your email?",
                   style: TextStyle(
                     fontSize: 30.0,
-                    fontFamily: 'Proxima Nova Bold',
+                    fontFamily: 'ProximaNovaBold',
                   ),
                 ),
                 SizedBox(
@@ -425,7 +425,7 @@ class CreateAccount extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18.0,
-                          fontFamily: 'Proxima Nova Bold'),
+                          fontFamily: 'ProximaNovaBold'),
                     ),
                   ),
                 )
@@ -443,7 +443,7 @@ class CreateAccount extends StatelessWidget {
                   "Create a Password",
                   style: TextStyle(
                     fontSize: 30.0,
-                    fontFamily: 'Proxima Nova Bold',
+                    fontFamily: 'ProximaNovaBold',
                   ),
                 ),
                 SizedBox(
@@ -501,7 +501,7 @@ class CreateAccount extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18.0,
-                          fontFamily: 'Proxima Nova Bold'),
+                          fontFamily: 'ProximaNovaBold'),
                     ),
                   ),
                 )
@@ -519,7 +519,7 @@ class CreateAccount extends StatelessWidget {
                   "What's your name?",
                   style: TextStyle(
                     fontSize: 30.0,
-                    fontFamily: 'Proxima Nova Bold',
+                    fontFamily: 'ProximaNovaBold',
                   ),
                 ),
                 SizedBox(
@@ -569,7 +569,7 @@ class CreateAccount extends StatelessWidget {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18.0,
-                                fontFamily: 'Proxima Nova Bold'),
+                                fontFamily: 'ProximaNovaBold'),
                           ),
                         ),
                 ),
@@ -625,7 +625,7 @@ class LoginPage extends StatelessWidget {
               "Email or userame",
               style: TextStyle(
                 fontSize: 30.0,
-                fontFamily: 'Proxima Nova Bold',
+                fontFamily: 'ProximaNovaBold',
               ),
             ),
             SizedBox(
@@ -652,7 +652,7 @@ class LoginPage extends StatelessWidget {
               "Password",
               style: TextStyle(
                 fontSize: 30.0,
-                fontFamily: 'Proxima Nova Bold',
+                fontFamily: 'ProximaNovaBold',
               ),
             ),
             SizedBox(
@@ -712,7 +712,7 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 18.0,
-                            fontFamily: 'Proxima Nova Bold'),
+                            fontFamily: 'ProximaNovaBold'),
                       ),
                     ),
             ),
@@ -741,7 +741,7 @@ class LoginPage extends StatelessWidget {
                   child: Text(
                     "FORGOT YOUR PASSWORD?",
                     style: TextStyle(
-                      fontFamily: 'Proxima Nova Bold',
+                      fontFamily: 'ProximaNovaBold',
                       fontSize: 14.0,
                     ),
                   ),
@@ -767,7 +767,7 @@ class PasswordRecovery extends StatelessWidget {
         title: Text(
           "Forgot your password?",
           style: TextStyle(
-            fontFamily: 'Proxima Nova Bold',
+            fontFamily: 'ProximaNovaBold',
           ),
         ),
         centerTitle: true,
@@ -781,7 +781,7 @@ class PasswordRecovery extends StatelessWidget {
             Text(
               "Email or username",
               style: TextStyle(
-                fontFamily: 'Proxima Nova Bold',
+                fontFamily: 'ProximaNovaBold',
                 fontSize: 35.0,
               ),
             ),
@@ -834,7 +834,7 @@ class PasswordRecovery extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
-                    fontFamily: 'Proxima Nova Bold',
+                    fontFamily: 'ProximaNovaBold',
                   ),
                 ),
               ),

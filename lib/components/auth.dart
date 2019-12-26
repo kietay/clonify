@@ -1,66 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/components/admin.dart';
-import 'package:clonify/components/spotify_home.dart';
 import 'package:clonify/logic/admin_logic.dart';
 import 'package:clonify/logic/auth_logic.dart';
 import 'package:clonify/logic/basic_ui.dart';
-
-class SplashScreen extends StatefulWidget {
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  Future chooseLandingPage() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    if (user == null) {
-      print("User not logged in");
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Material(
-                    child: ChangeNotifierProvider(
-                      builder: (_) => SessionManagement(),
-                      child: FirebaseSession(),
-                    ),
-                  )));
-    } else {
-      print("Current User: " + user.uid);
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Material(
-                    child: MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          builder: (_) => SessionManagement(),
-                        ),
-                      ],
-                      child: SpotifyHome(),
-                    ),
-                  )));
-    }
-  }
-
-  @override
-  void initState() {
-    Future.delayed(Duration(seconds: 2), () {
-      chooseLandingPage();
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Image.asset("./images/spotify_logo_title.png"),
-      ),
-    );
-  }
-}
 
 class FirebaseSession extends StatelessWidget {
   @override

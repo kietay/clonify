@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:clonify/components/auth.dart';
+import 'package:clonify/components/splash_screen.dart';
 
 void main() {
   runApp(MaterialApp(

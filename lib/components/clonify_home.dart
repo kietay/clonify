@@ -8,7 +8,7 @@ import 'package:clonify/components/admin.dart';
 import 'package:clonify/components/user.dart';
 import 'package:clonify/components/recently_played.dart';
 
-class SpotifyHome extends StatelessWidget {
+class ClonifyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sessionObject = Provider.of<SessionManagement>(context);

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/components/spotify_home.dart';
 import 'package:clonify/logic/auth_logic.dart';
-import 'package:clonify/components/auth.dart';
+import 'package:clonify/components/auth/firebase_session.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
           MaterialPageRoute(
               builder: (context) => Material(
                     child: ChangeNotifierProvider(
-                      builder: (_) => SessionManagement(),
+                      create: (_) => SessionManagement(),
                       child: FirebaseSession(),
                     ),
                   )));
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: MultiProvider(
                       providers: [
                         ChangeNotifierProvider(
-                          builder: (_) => SessionManagement(),
+                          create: (_) => SessionManagement(),
                         ),
                       ],
                       child: SpotifyHome(),

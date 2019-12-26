@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/logic/auth_logic.dart';
+import 'package:clonify/logic/auth.dart';
 
 class PasswordRecovery extends StatelessWidget {
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/logic/home_logic.dart';
+import 'package:clonify/logic/homedart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class RecentlyPlayed extends StatelessWidget {
   @override
@@ -45,12 +46,13 @@ class RecentlyPlayed extends StatelessWidget {
                               width: MediaQuery.of(context).size.height * 0.18,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                // image: AssetImage(recentlyPlayed
-                                //     .recentlyPlayed[i].thumbnailUrl),
-                                // image: FirebaseStorageImage(recentlyPlayed
-                                //     .recentlyPlayed[song].thumbnailUrl),
-                                image: NetworkImage(recentlyPlayed
-                                    .recentlyPlayed[song].thumbnailUrl),
+                                image:
+                                    recentlyPlayed.recentlyPlayed[song].type ==
+                                            'song'
+                                        ? NetworkImage(recentlyPlayed
+                                            .recentlyPlayed[song].thumbnailUrl)
+                                        : AssetImage(recentlyPlayed
+                                            .recentlyPlayed[song].thumbnailUrl),
                                 fit: BoxFit.cover,
                               )),
                             ),

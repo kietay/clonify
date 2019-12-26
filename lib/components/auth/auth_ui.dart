@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/components/admin.dart';
-import 'package:clonify/logic/admin_logic.dart';
-import 'package:clonify/logic/auth_logic.dart';
+import 'package:clonify/logic/admin.dart';
+import 'package:clonify/logic/auth.dart';
 import 'package:clonify/logic/basic_ui.dart';
 import 'package:clonify/components/auth/create_account.dart';
 import 'package:clonify/components/auth/login_page.dart';

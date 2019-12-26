@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class RecentlyPlayedItem {
   String id;
@@ -45,7 +46,7 @@ class RecentlyPlayedLogic extends ChangeNotifier {
           id: songDoc.data['songId'],
           lastPlayed: DateTime.fromMillisecondsSinceEpoch(
               elem['lastPlayed'].seconds * 1000),
-          thumbnailUrl: songDoc.data['thumbnailUrl'],
+          thumbnailUrl: await fetchSongImageUrl(songDoc.data['thumbnailUrl']),
           type: 'song',
           title: songDoc.data['songTitle']);
     }));
@@ -77,5 +78,11 @@ class RecentlyPlayedLogic extends ChangeNotifier {
             type: 'playlist',
             title: fdoc.data['playlistName']))
         .toList();
+  }
+
+  Future<String> fetchSongImageUrl(file) async {
+    final ref = FirebaseStorage.instance.ref().child(file);
+    var url = await ref.getDownloadURL();
+    return url;
   }
 }

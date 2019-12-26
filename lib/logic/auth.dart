@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/components/spotify_home.dart';
+import 'package:clonify/components/clonify_home.dart';
 import 'package:clonify/logic/basic_ui.dart';
 
 class SessionManagement extends ChangeNotifier {
@@ -74,7 +74,7 @@ class LoginLogic extends ChangeNotifier {
                         builder: (_) => SessionManagement(),
                       )
                     ],
-                    child: SpotifyHome(),
+                    child: ClonifyHome(),
                   )),
           (Route<dynamic> route) => false);
     } catch (e) {
@@ -170,7 +170,7 @@ class CreateUserAccount extends ChangeNotifier {
                         builder: (_) => SessionManagement(),
                       )
                     ],
-                    child: SpotifyHome(),
+                    child: ClonifyHome(),
                   )),
           (Route<dynamic> route) => false);
       return true;

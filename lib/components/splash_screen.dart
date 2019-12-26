@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/components/spotify_home.dart';
-import 'package:clonify/logic/auth_logic.dart';
+import 'package:clonify/components/clonify_home.dart';
+import 'package:clonify/logic/auth.dart';
 import 'package:clonify/components/auth/firebase_session.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           create: (_) => SessionManagement(),
                         ),
                       ],
-                      child: SpotifyHome(),
+                      child: ClonifyHome(),
                     ),
                   )));
     }

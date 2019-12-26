@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/logic/auth_logic.dart';
+import 'package:clonify/logic/auth.dart';
 import 'package:clonify/logic/basic_ui.dart';
 
 class CreateAccount extends StatelessWidget {

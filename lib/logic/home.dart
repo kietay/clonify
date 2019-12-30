@@ -9,9 +9,15 @@ class RecentlyPlayedItem {
   DateTime lastPlayed;
   String thumbnailUrl;
   String title;
+  String audioUrl;
 
   RecentlyPlayedItem(
-      {this.id, this.type, this.lastPlayed, this.thumbnailUrl, this.title});
+      {this.id,
+      this.type,
+      this.lastPlayed,
+      this.thumbnailUrl,
+      this.title,
+      this.audioUrl});
 }
 
 class RecentlyPlayedLogic extends ChangeNotifier {
@@ -48,7 +54,8 @@ class RecentlyPlayedLogic extends ChangeNotifier {
               elem['lastPlayed'].seconds * 1000),
           thumbnailUrl: await fetchSongImageUrl(songDoc.data['thumbnailUrl']),
           type: 'song',
-          title: songDoc.data['songTitle']);
+          title: songDoc.data['songTitle'],
+          audioUrl: songDoc.data['audioUrl']);
     }));
 
     return fetchedSongs.toList();

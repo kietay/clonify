@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/logic/home.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:clonify/logic/audio.dart';
 
 class RecentlyPlayed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final recentlyPlayed = Provider.of<RecentlyPlayedLogic>(context);
+    final audioProvider = Provider.of<AudioProvider>(context);
     if (!recentlyPlayed.historyFetched) {
       recentlyPlayed.fetchUserHistory();
     }
@@ -41,20 +43,28 @@ class RecentlyPlayed extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.18,
-                              width: MediaQuery.of(context).size.height * 0.18,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                image:
-                                    recentlyPlayed.recentlyPlayed[song].type ==
-                                            'song'
-                                        ? NetworkImage(recentlyPlayed
-                                            .recentlyPlayed[song].thumbnailUrl)
-                                        : AssetImage(recentlyPlayed
-                                            .recentlyPlayed[song].thumbnailUrl),
-                                fit: BoxFit.cover,
-                              )),
+                            GestureDetector(
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.18,
+                                width:
+                                    MediaQuery.of(context).size.height * 0.18,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                  image: recentlyPlayed
+                                              .recentlyPlayed[song].type ==
+                                          'song'
+                                      ? NetworkImage(recentlyPlayed
+                                          .recentlyPlayed[song].thumbnailUrl)
+                                      : AssetImage(recentlyPlayed
+                                          .recentlyPlayed[song].thumbnailUrl),
+                                  fit: BoxFit.cover,
+                                )),
+                              ),
+                              onTap: () {
+                                audioProvider.pickSong(recentlyPlayed
+                                    .recentlyPlayed[song].audioUrl);
+                              },
                             ),
                             SizedBox(
                               height: 10.0,

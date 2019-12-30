@@ -1,3 +1,4 @@
+import 'package:clonify/logic/audio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +36,9 @@ class _SplashScreenState extends State<SplashScreen> {
                         ChangeNotifierProvider(
                           create: (_) => SessionManagement(),
                         ),
+                        ChangeNotifierProvider(
+                          create: (_) => AudioProvider(),
+                        )
                       ],
                       child: ClonifyHome(),
                     ),

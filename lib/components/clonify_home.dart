@@ -5,11 +5,14 @@ import 'package:clonify/logic/home.dart';
 import 'package:clonify/components/admin.dart';
 import 'package:clonify/components/user.dart';
 import 'package:clonify/components/recently_played.dart';
+import 'package:clonify/logic/audio.dart';
 
 class ClonifyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sessionObject = Provider.of<SessionManagement>(context);
+    final audioProvider = Provider.of<AudioProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
           title: const Text("Clonify"),
@@ -139,9 +142,12 @@ class ClonifyHome extends StatelessWidget {
         ],
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => print("BUtton pressed bldu"),
+        onPressed: () {
+          print("Floating action button pressed");
+          audioProvider.playButton();
+        },
         tooltip: 'Increment Counter',
-        child: Icon(Icons.play_arrow),
+        child: Icon(!audioProvider.isPlaying ? Icons.play_arrow : Icons.pause),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

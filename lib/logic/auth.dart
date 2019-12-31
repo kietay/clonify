@@ -3,11 +3,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/components/clonify_home.dart';
+import 'package:clonify/components/home/clonify_home.dart';
 import 'package:clonify/logic/basic_ui.dart';
+import 'package:clonify/components/home/home_screen.dart';
+import 'package:clonify/components/home/search.dart';
+import 'package:clonify/components/home/library.dart';
 
 class SessionManagement extends ChangeNotifier {
   FirebaseUser fUser;
+
+  final screens = {
+    'home': homeScreen,
+    'search': searchScreen,
+    'library': libraryScreen,
+  };
+  var currentScreen = 'home';
+
+  void changeScreen(newScreen) {
+    currentScreen = newScreen;
+    notifyListeners();
+  }
 
   Future<FirebaseUser> currentUser() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();

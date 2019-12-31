@@ -2,7 +2,7 @@ import 'package:clonify/logic/audio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/components/clonify_home.dart';
+import 'package:clonify/components/home/clonify_home.dart';
 import 'package:clonify/logic/auth.dart';
 import 'package:clonify/components/auth/firebase_session.dart';
 

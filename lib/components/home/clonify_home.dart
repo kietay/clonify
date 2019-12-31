@@ -86,7 +86,13 @@ class ClonifyHome extends StatelessWidget {
           ],
         ),
       ),
-      body: sessionObject.screens[sessionObject.currentScreen],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return ScaleTransition(child: child, scale: animation);
+        },
+        child: sessionObject.screens[sessionObject.currentScreen],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print("Floating action button pressed");

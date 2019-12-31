@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:clonify/components/home/clonify_home.dart';
 import 'package:clonify/logic/auth.dart';
 import 'package:clonify/components/auth/firebase_session.dart';
+import 'package:clonify/logic/home.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -38,6 +39,9 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                         ChangeNotifierProvider(
                           create: (_) => AudioProvider(),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) => RecentlyPlayedLogic(),
                         )
                       ],
                       child: ClonifyHome(),

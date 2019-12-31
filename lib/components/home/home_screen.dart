@@ -12,10 +12,7 @@ final homeScreen = SafeArea(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Material(
-            child: ChangeNotifierProvider(
-              create: (_) => RecentlyPlayedLogic(),
-              child: RecentlyPlayed(),
-            ),
+            child: RecentlyPlayed(),
           )
           // MadeforYou(),
           // RecomendedforYou(),

@@ -5,11 +5,12 @@ import 'package:clonify/logic/audio.dart';
 
 // todo refactor to one class per file
 class SearchResult extends StatelessWidget {
-  SearchResult(this.title, this.subtitle, this.audioUrl);
+  SearchResult(this.title, this.subtitle, this.audioUrl, this.thumbnailUrl);
 
   final String title;
   final String subtitle;
   final String audioUrl;
+  final String thumbnailUrl;
 
   @override
   build(context) {
@@ -21,7 +22,8 @@ class SearchResult extends StatelessWidget {
               audio.pickSong(audioUrl);
             },
             child: ListTile(
-              leading: FlutterLogo(size: 56.0),
+              leading:
+                  Image(image: NetworkImage(thumbnailUrl), fit: BoxFit.contain),
               title: Text(title),
               subtitle: Text(subtitle),
               trailing: GestureDetector(
@@ -90,7 +92,8 @@ class SearchScreen extends StatelessWidget {
                   itemBuilder: (context, ind) => SearchResult(
                       songs[ind].songTitle,
                       songs[ind].performedBy,
-                      songs[ind].audioUrl),
+                      songs[ind].audioUrl,
+                      songs[ind].thumbnailUrl),
                 ),
               ]));
   }

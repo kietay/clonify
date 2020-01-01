@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:clonify/logic/search.dart';
 
 // todo refactor to one class per file
 class SearchResult extends StatelessWidget {
@@ -56,19 +57,27 @@ class _SearchBarState extends State<SearchBar> {
 
 class SearchScreen extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => SafeArea(
-      key: ValueKey<int>(2),
-      child: Column(children: [
-        SearchBar(),
-        Container(
-            child: ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                // todo make this a listview builder for search results
-                SearchResult("Song One", "Kendrick Lamar"),
-                SearchResult("Song Two", "Judge Judy"),
-              ],
-            ),
-            padding: EdgeInsets.all(4.0)),
-      ]));
+  Widget build(BuildContext context) {
+    final searchLogic = Provider.of<SearchLogic>(context);
+
+    if (!searchLogic.songsLoaded) searchLogic.newSearchScreen();
+
+    var songs = searchLogic.songs;
+
+    return SafeArea(
+        key: ValueKey<int>(2),
+        child: !searchLogic.songsLoaded
+            ? CircularProgressIndicator()
+            : Column(children: [
+                SearchBar(),
+                Container(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: songs.length,
+                      itemBuilder: (context, ind) => SearchResult(
+                          songs[ind].songTitle, songs[ind].performedBy),
+                    ),
+                    padding: EdgeInsets.all(4.0)),
+              ]));
+  }
 }

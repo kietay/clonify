@@ -2,23 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
-class RecentlyPlayedItem {
-  String id;
-  String type;
-  DateTime lastPlayed;
-  String thumbnailUrl;
-  String title;
-  String audioUrl;
-
-  RecentlyPlayedItem(
-      {this.id,
-      this.type,
-      this.lastPlayed,
-      this.thumbnailUrl,
-      this.title,
-      this.audioUrl});
-}
+import 'package:clonify/models/recently_played_item.dart';
 
 class RecentlyPlayedLogic extends ChangeNotifier {
   bool historyFetched = false;

@@ -12,6 +12,7 @@ import 'package:clonify/components/home/library.dart';
 class SessionManagement extends ChangeNotifier {
   FirebaseUser fUser;
 
+// todo move this to somewhere more appropriate
   final screens = {
     'home': homeScreen,
     'search': SearchScreen(),

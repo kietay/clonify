@@ -9,7 +9,13 @@ class SearchLogic extends ChangeNotifier {
   bool songsLoaded = false;
 
   void newSearchScreen() async {
-    await fetchAllSongs();
+    songs = await fetchAllSongs();
+    songsLoaded = true;
+    notifyListeners();
+  }
+
+  void searchButton(searchTerm) async {
+    songs = await searchSongs(searchTerm);
     songsLoaded = true;
     notifyListeners();
   }
@@ -18,10 +24,34 @@ class SearchLogic extends ChangeNotifier {
     final songQuery =
         await Firestore.instance.collection('songs').getDocuments();
 
-    return songQuery.documents.map((doc) => Song(
+    return songQuery.documents
+        .map((doc) => Song(
+            songId: doc.data['songId'],
+            artistId: doc.data['artistId'],
+            songTitle: doc.data['songTitle'],
+            audioUrl: doc.data['audioUrl'],
+            performedBy: doc.data['performedBy'] != null
+                ? doc.data['performedBy']
+                : 'Unknown Artist'))
+        .toList();
+  }
+
+  Future<List<Song>> searchSongs(String searchTerm) async {
+    final songQuery =
+        await Firestore.instance.collection('songs').getDocuments();
+
+    var docs = songQuery.documents.map((doc) => Song(
         songId: doc.data['songId'],
         artistId: doc.data['artistId'],
         songTitle: doc.data['songTitle'],
-        performedBy: doc.data['performedBy']));
+        audioUrl: doc.data['audioUrl'],
+        performedBy: doc.data['performedBy'] != null
+            ? doc.data['performedBy']
+            : 'Unknown Artist'));
+
+    return docs
+        .where((doc) =>
+            doc.songTitle.toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
   }
 }

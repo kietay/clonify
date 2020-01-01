@@ -11,16 +11,17 @@ class ClonifyHome extends StatelessWidget {
     final sessionObject = Provider.of<SessionManagement>(context);
     final audioProvider = Provider.of<AudioProvider>(context);
 
-    final bottomBarItem = (icon, text, onTap) => GestureDetector(
-        onTap: onTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Icon(icon),
-            Text(text),
-          ],
-        ));
+    final bottomBarItem = (icon, text, onTap) => Expanded(
+        child: InkWell(
+            onTap: onTap,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Icon(icon),
+                Text(text),
+              ],
+            )));
 
     final settingsButton = GestureDetector(
       child: Align(

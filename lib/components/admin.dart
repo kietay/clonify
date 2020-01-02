@@ -100,41 +100,54 @@ class AddArtist extends StatelessWidget {
       appBar: AppBar(
         title: Text("Add Artist"),
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(20.0),
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Artist Name'),
-                  onChanged: (String text) {
-                    adminObj.name = text;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Cover Image URL',
-                  ),
-                  onChanged: (String text) {
-                    adminObj.coverUrl = text;
-                  },
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                RaisedButton(
-                  color: Colors.blue,
-                  onPressed: () {
-                    adminObj.addArtist(adminObj.name, adminObj.coverUrl);
-                  },
-                  child: Text("Add Artist"),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+      body: Builder(
+          builder: (context) => ListView(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(20.0),
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          decoration: InputDecoration(labelText: 'Artist Name'),
+                          onChanged: (String text) {
+                            adminObj.name = text;
+                          },
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Cover Image URL',
+                          ),
+                          onChanged: (String text) {
+                            adminObj.coverUrl = text;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        RaisedButton(
+                          color: Colors.blue,
+                          onPressed: () async {
+                            final res = await adminObj.addArtist(
+                                adminObj.name, adminObj.coverUrl);
+                            if (res == 1) {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text('Artist added congrats mate'),
+                                  duration: Duration(seconds: 2)));
+                            } else {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text('Artist already exists soz'),
+                                duration: Duration(seconds: 2),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          },
+                          child: Text("Add Artist"),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              )),
     );
   }
 }
@@ -204,14 +217,14 @@ class AddSong extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Song Name'),
+                  decoration: InputDecoration(labelText: 'Song name'),
                   onChanged: (String text) {
                     adminObj.audioName = text;
                   },
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Song Mp3 link',
+                    labelText: 'Song mp3 url',
                   ),
                   onChanged: (String text) {
                     adminObj.audioUrl = text;
@@ -219,7 +232,7 @@ class AddSong extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Song Thumnail URL',
+                    labelText: 'Song thumbnail url',
                   ),
                   onChanged: (String text) {
                     adminObj.songThumbnail = text;
@@ -227,7 +240,7 @@ class AddSong extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Performed By',
+                    labelText: 'Performed by',
                   ),
                   onChanged: (String text) {
                     adminObj.performedBy = text;
@@ -235,7 +248,7 @@ class AddSong extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Written By',
+                    labelText: 'Written by',
                   ),
                   onChanged: (String text) {
                     adminObj.writtenBy = text;
@@ -243,7 +256,7 @@ class AddSong extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Produced By',
+                    labelText: 'Produced by',
                   ),
                   onChanged: (String text) {
                     adminObj.producedBy = text;
@@ -277,7 +290,7 @@ class AddSong extends StatelessWidget {
                     padding: EdgeInsets.all(10.0),
                     child: artistId != null
                         ? Text(artistId)
-                        : Text("Select the Artist"),
+                        : Text("Select Artist"),
                   ),
                 ),
                 SizedBox(
@@ -422,59 +435,38 @@ class SelectArtist extends StatelessWidget {
             Container(
               child: TextFormField(
                 decoration: InputDecoration(labelText: 'Search'),
-                onChanged: (String q) async {
-                  q = q.toUpperCase();
-                  if (q.length == 1) {
-                    QuerySnapshot qsnap = await Firestore.instance
-                        .collection("artists")
-                        .where("artistIndex", isEqualTo: q.toUpperCase())
-                        .getDocuments();
-                    adminObj.data = qsnap.documents;
-                    adminObj.qdata = adminObj.data;
-                    adminObj.reloadTheState();
-                  } else {
-                    adminObj.qdata = [];
-                    for (int i = 0; i < adminObj.data.length; i++) {
-                      //print(adminObj.data[i]['name'].toString().toUpperCase()+ ", Query is : "+q);
-                      if (adminObj.data[i]['name']
-                          .toString()
-                          .toUpperCase()
-                          .contains(q)) {
-                        adminObj.qdata.add(adminObj.data[i]);
-                      }
-                    }
-                    adminObj.reloadTheState();
-                  }
+                onFieldSubmitted: (String q) async {
+                  q = q.toLowerCase();
+                  QuerySnapshot qsnap = await Firestore.instance
+                      .collection("artists")
+                      .where("name", isEqualTo: q.toLowerCase())
+                      .getDocuments();
+                  adminObj.data = qsnap.documents;
+                  adminObj.qdata = adminObj.data;
+                  print(adminObj.data);
+                  adminObj.reloadTheState();
                 },
               ),
             ),
-            adminObj.qdata != null
-                ? adminObj.qdata.length == 0
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Container(
-                        height: 100.0,
-                        child: ListView.builder(
-                          itemCount: adminObj.qdata.length,
-                          itemBuilder: (context, i) {
-                            return ListTile(
-                              title: Text(adminObj.qdata[i]['name']),
-                              subtitle: Text(adminObj.qdata[i]['artistId']),
-                              trailing: RaisedButton(
-                                color: Colors.black,
-                                onPressed: () {
-                                  artistId =
-                                      adminObj.qdata[i]['artistId'].toString();
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Select"),
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                : Text("Start Searching")
+            Expanded(
+              child: ListView.builder(
+                itemCount: adminObj.qdata.length,
+                itemBuilder: (context, i) {
+                  return ListTile(
+                    title: Text(adminObj.qdata[i]['name']),
+                    subtitle: Text(adminObj.qdata[i]['artistId']),
+                    trailing: RaisedButton(
+                      color: Colors.black,
+                      onPressed: () {
+                        artistId = adminObj.qdata[i]['artistId'].toString();
+                        Navigator.pop(context);
+                      },
+                      child: Text("Select"),
+                    ),
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),

@@ -1,21 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class Admin extends ChangeNotifier {
   String name, coverUrl;
-  void addArtist(String name, String imageUrl) {
-    var ref = Firestore.instance.collection("artists").document();
-    ref.setData({
-      "artistId": ref.documentID,
-      "name": name,
-      "followers": 0,
-      "monthlyListerners": 0,
-      "coverImageUrl": imageUrl
-    }).then((doc) {
-      print("New artist added");
-    }).catchError((e) {
-      print("Could not add new artist:" + e);
-    });
+  Future<int> addArtist(String name, String imageUrl) async {
+    QuerySnapshot qsnap = await Firestore.instance
+        .collection("artists")
+        .where("name", isEqualTo: name.toLowerCase())
+        .getDocuments();
+
+    if (qsnap.documents.length != 0) {
+      print('Artist already exists sorry mate');
+      return -1;
+    } else {
+      var ref = Firestore.instance.collection("artists").document();
+      ref.setData({
+        "artistId": ref.documentID,
+        "name": name.toLowerCase(),
+        "followers": 0,
+        "monthlyListerners": 0,
+        "coverImageUrl": imageUrl
+      }).then((doc) {
+        print("New artist added");
+      }).catchError((e) {
+        print("Could not add new artist:" + e);
+      });
+      return 1;
+    }
   }
 
   String catName, catImageUrl;

@@ -87,7 +87,7 @@ class LoginLogic extends ChangeNotifier {
               builder: (context) => MultiProvider(
                     providers: [
                       ChangeNotifierProvider(
-                        builder: (_) => SessionManagement(),
+                        create: (_) => SessionManagement(),
                       )
                     ],
                     child: ClonifyHome(),
@@ -183,7 +183,7 @@ class CreateUserAccount extends ChangeNotifier {
               builder: (context) => MultiProvider(
                     providers: [
                       ChangeNotifierProvider(
-                        builder: (_) => SessionManagement(),
+                        create: (_) => SessionManagement(),
                       )
                     ],
                     child: ClonifyHome(),

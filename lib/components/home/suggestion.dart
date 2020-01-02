@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clonify/models/song.dart';
 import 'package:clonify/logic/audio.dart';
 import 'package:clonify/logic/suggestions.dart';
 
@@ -31,8 +30,8 @@ class SuggestionWidget extends StatelessWidget {
                   itemCount: suggestion.songs.length,
                   itemBuilder: (context, ind) {
                     final song = suggestion.songs[ind];
-                    return SuggestionItem(
-                        song.songTitle, song.thumbnailUrl, song.audioUrl);
+                    return SuggestionItem(song.songTitle, song.thumbnailUrl,
+                        song.audioUrl, song.songId);
                   }))
         ],
       ),
@@ -41,13 +40,15 @@ class SuggestionWidget extends StatelessWidget {
 }
 
 class SuggestionItem extends StatelessWidget {
-  SuggestionItem(this.title, this.thumbnailUrl, this.audioUrl, {Key key})
+  SuggestionItem(this.title, this.thumbnailUrl, this.audioUrl, this.songId,
+      {Key key})
       : super(key: key);
 
   final itemScale = 0.18;
   final String title;
   final String thumbnailUrl;
   final String audioUrl;
+  final String songId;
 
   @override
   build(context) {
@@ -68,7 +69,7 @@ class SuggestionItem extends StatelessWidget {
                           image: NetworkImage(thumbnailUrl),
                           fit: BoxFit.cover)),
                 ),
-                onTap: () => audioProvider.pickSong(audioUrl),
+                onTap: () => audioProvider.pickSong(audioUrl, songId),
               ),
               SizedBox(
                 height: 10.0,

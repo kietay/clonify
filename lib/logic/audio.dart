@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AudioProvider extends ChangeNotifier {
   bool isPlaying = false;
@@ -19,13 +20,15 @@ class AudioProvider extends ChangeNotifier {
     return url;
   }
 
-  void pickSong(song) async {
-    String url = await fetchSongFileUrl(song);
+  void pickSong(String songUrl, String songId) async {
+    String url = await fetchSongFileUrl(songUrl);
     final res = await audioPlayer.play(url);
     if (res == 1) {
-      audioPlayer.play(url);
+      addToRecentlyPlayed(songId);
       isPlaying = true;
       notifyListeners();
+    } else {
+      print('Problem playing song');
     }
   }
 
@@ -58,5 +61,18 @@ class AudioProvider extends ChangeNotifier {
     print("Audio player paused...");
     isPlaying = false;
     notifyListeners();
+  }
+
+  void addToRecentlyPlayed(songId) async {
+    final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
+
+    CollectionReference ref = Firestore.instance
+        .collection('users')
+        .document(firebaseUser.uid)
+        .collection('songHistory');
+
+    ref
+        .document(songId)
+        .setData({'songId': songId, 'lastPlayed': DateTime.now()});
   }
 }

@@ -5,12 +5,14 @@ import 'package:clonify/logic/audio.dart';
 
 // todo refactor to one class per file
 class SearchResult extends StatelessWidget {
-  SearchResult(this.title, this.subtitle, this.audioUrl, this.thumbnailUrl);
+  SearchResult(
+      this.title, this.subtitle, this.audioUrl, this.thumbnailUrl, this.songId);
 
   final String title;
   final String subtitle;
   final String audioUrl;
   final String thumbnailUrl;
+  final String songId;
 
   @override
   build(context) {
@@ -19,7 +21,7 @@ class SearchResult extends StatelessWidget {
         child: InkWell(
             onTap: () {
               print(audioUrl);
-              audio.pickSong(audioUrl);
+              audio.pickSong(audioUrl, songId);
             },
             child: ListTile(
               leading:
@@ -93,7 +95,8 @@ class SearchScreen extends StatelessWidget {
                       songs[ind].songTitle,
                       songs[ind].performedBy,
                       songs[ind].audioUrl,
-                      songs[ind].thumbnailUrl),
+                      songs[ind].thumbnailUrl,
+                      songs[ind].songId),
                 ),
               ]));
   }

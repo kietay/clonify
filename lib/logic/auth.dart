@@ -14,9 +14,9 @@ class SessionManagement extends ChangeNotifier {
 
 // todo move this to somewhere more appropriate
   final screens = {
-    'home': homeScreen,
+    'home': HomeScreen(),
     'search': SearchScreen(),
-    'library': libraryScreen,
+    'library': LibraryScreen(),
   };
   var currentScreen = 'home';
 

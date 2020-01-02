@@ -12,7 +12,8 @@ class UserAdmin extends StatelessWidget {
         appBar: AppBar(
           title: Text("User admin"),
         ),
-        body: IconButton(
+        body: Center(
+            child: IconButton(
           icon: Icon(Icons.gavel),
           onPressed: () async {
             var loggedOut = await sessionObject.logout();
@@ -22,6 +23,6 @@ class UserAdmin extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => SplashScreen()));
             }
           },
-        ));
+        )));
   }
 }

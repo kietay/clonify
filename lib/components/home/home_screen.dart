@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/logic/home.dart';
 import 'package:clonify/components/home/recently_played.dart';
+import 'package:clonify/logic/suggestions.dart';
+import 'package:clonify/components/home/suggestion.dart';
 
-final homeScreen = SafeArea(
-    key: ValueKey<int>(1),
-    child: ListView(
-      children: <Widget>[
-        Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Material(
-                child: RecentlyPlayed(),
-              )
-              // MadeforYou(),
-              // RecomendedforYou(),
-              // PopularTrending(),
-              // EditorsPicks(),
-              // GlobalReleases(),
-              // BecauseYouLike(),
-            ],
-          ),
-        ),
-      ],
-    ));
+class HomeScreen extends StatelessWidget {
+  @override
+  build(context) {
+    final suggestions = Provider.of<Suggestions>(context);
+
+    if (!suggestions.itemsFetched) {
+      suggestions.fetchHomeScreen();
+    }
+
+    return SafeArea(
+        key: ValueKey<int>(1),
+        child: !suggestions.itemsFetched
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: suggestions.suggestions.length,
+                itemBuilder: (context, ind) {
+                  final sug = suggestions.suggestions[ind];
+                  return SuggestionWidget(sug);
+                }));
+  }
+}

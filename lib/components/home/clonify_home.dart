@@ -39,7 +39,7 @@ class ClonifyHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: const Text("Clonify"),
-          backgroundColor: Colors.green.withOpacity(0.5),
+          backgroundColor: Colors.green.shade900,
           bottomOpacity: 1,
           textTheme: const TextTheme(
               title: TextStyle(fontFamily: 'ProximaNovaBold', fontSize: 30.0)),

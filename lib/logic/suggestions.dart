@@ -19,7 +19,9 @@ class Suggestions extends ChangeNotifier {
   List<Suggestion> suggestions = [];
 
   Suggestions() {
-    suggestions.add(Suggestion('Recently played', fillSongHistory));
+    suggestions.add(Suggestion('Recently played', fetchRecentlyPlayed));
+    suggestions.add(Suggestion('Suggested for you', fetchPersonalTracks));
+    suggestions.add(Suggestion('Hot near you', fetchRecentlyPlayed));
   }
 
   void fetchHomeScreen() async {
@@ -38,7 +40,7 @@ class Suggestions extends ChangeNotifier {
     return url;
   }
 
-  Future<List<Song>> fillSongHistory() async {
+  Future<List<Song>> fetchRecentlyPlayed() async {
     final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
 
     print("Getting song history for user: ${firebaseUser.uid}");
@@ -46,6 +48,33 @@ class Suggestions extends ChangeNotifier {
         .collection("users")
         .document(firebaseUser.uid)
         .collection("songHistory")
+        .getDocuments();
+
+    final fetchedSongs = await Future.wait(qsnap.documents.map((elem) async {
+      final songDoc = await Firestore.instance
+          .collection("songs")
+          .document(elem.data['songId'])
+          .get();
+
+      return Song(
+          songId: songDoc.data['songId'],
+          thumbnailUrl: await fetchSongImageUrl(songDoc.data['thumbnailUrl']),
+          songTitle: songDoc.data['songTitle'],
+          performedBy: songDoc.data['performedBy'],
+          audioUrl: songDoc.data['audioUrl']);
+    }));
+
+    return fetchedSongs.toList();
+  }
+
+  Future<List<Song>> fetchPersonalTracks() async {
+    final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
+
+    print("Getting song suggestions for user: ${firebaseUser.uid}");
+    QuerySnapshot qsnap = await Firestore.instance
+        .collection("users")
+        .document(firebaseUser.uid)
+        .collection("suggestedSongs")
         .getDocuments();
 
     final fetchedSongs = await Future.wait(qsnap.documents.map((elem) async {

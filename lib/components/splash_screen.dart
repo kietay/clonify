@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:clonify/components/home/clonify_home.dart';
 import 'package:clonify/logic/auth.dart';
 import 'package:clonify/components/auth/firebase_session.dart';
-import 'package:clonify/logic/home.dart';
 import 'package:clonify/logic/search.dart';
 import 'package:clonify/logic/suggestions.dart';
 

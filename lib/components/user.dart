@@ -14,13 +14,16 @@ class UserAdmin extends StatelessWidget {
         ),
         body: Center(
             child: IconButton(
-          icon: Icon(Icons.gavel),
+          icon: Icon(Icons.keyboard_return),
+          iconSize: 150.0,
           onPressed: () async {
             var loggedOut = await sessionObject.logout();
             if (loggedOut) {
               print(Navigator.canPop(context));
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => SplashScreen()));
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => SplashScreen()),
+                  (Route<dynamic> route) => false);
             }
           },
         )));

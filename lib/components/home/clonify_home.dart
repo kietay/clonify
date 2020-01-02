@@ -37,6 +37,7 @@ class ClonifyHome extends StatelessWidget {
     );
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
           title: const Text("Clonify"),
           backgroundColor: Color.fromRGBO(30, 215, 96, 100),

@@ -311,9 +311,9 @@ class AddSong extends StatelessWidget {
                   child: Container(
                     color: Colors.cyan,
                     padding: EdgeInsets.all(10.0),
-                    child: categoriesOfMusic != null
+                    child: categoriesOfMusic.length > 0
                         ? Text(categoriesOfMusic.toString())
-                        : Text("Select the Categories"),
+                        : Text("Select categories"),
                   ),
                 ),
                 RaisedButton(

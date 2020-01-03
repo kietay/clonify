@@ -7,7 +7,21 @@ class LibraryScreen extends StatelessWidget {
     return SafeArea(
       key: ValueKey<int>(3),
       child: ListView(
-        children: <Widget>[Text('Hello ur now libary')],
+        children: <Widget>[
+          InkWell(
+              onDoubleTap: () => print('songs'),
+              child: ListTile(
+                title: Text('Songs'),
+              )),
+          InkWell(
+              child: ListTile(
+            title: Text('Artists'),
+          )),
+          InkResponse(
+              child: ListTile(
+            title: Text('Albums'),
+          )),
+        ],
       ),
     );
   }

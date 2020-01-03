@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clonify/logic/admin.dart';
+import 'package:clonify/models/song.dart';
 
 class SpotifyAdmin extends StatelessWidget {
   @override
@@ -39,7 +40,7 @@ class SpotifyAdmin extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (contex) => Material(
                                 child: ChangeNotifierProvider(
-                                  builder: (_) => Admin(),
+                                  create: (_) => Admin(),
                                   child: AddCategory(),
                                 ),
                               )));
@@ -57,7 +58,7 @@ class SpotifyAdmin extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (contex) => Material(
                                 child: ChangeNotifierProvider(
-                                  builder: (_) => Admin(),
+                                  create: (_) => Admin(),
                                   child: AddSong(),
                                 ),
                               )));
@@ -75,7 +76,7 @@ class SpotifyAdmin extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (contex) => Material(
                                 child: ChangeNotifierProvider(
-                                  builder: (_) => Admin(),
+                                  create: (_) => Admin(),
                                   child: AddAlbum(),
                                 ),
                               )));
@@ -203,6 +204,13 @@ String artistId;
 List<Map<String, dynamic>> categoriesOfMusic = [];
 
 class AddSong extends StatelessWidget {
+  static final List<String> inputFields = [
+    'songTitle',
+    'performedBy',
+    'audioUrl',
+    'thumbnailUrl',
+  ];
+
   @override
   Widget build(BuildContext context) {
     final adminObj = Provider.of<Admin>(context);
@@ -213,63 +221,22 @@ class AddSong extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Container(
+              padding: EdgeInsets.all(10),
+              constraints: BoxConstraints.expand(
+                  height: MediaQuery.of(context).size.height * 0.5),
+              child: ListView.builder(
+                  itemCount: inputFields.length,
+                  itemBuilder: (context, ind) {
+                    return TextFormField(
+                        decoration:
+                            InputDecoration(labelText: inputFields[ind]),
+                        onChanged: (text) =>
+                            adminObj.newSongData[inputFields[ind]] = text);
+                  })),
+          Container(
             margin: EdgeInsets.all(20.0),
             child: Column(
               children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Song name'),
-                  onChanged: (String text) {
-                    adminObj.audioName = text;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Song mp3 url',
-                  ),
-                  onChanged: (String text) {
-                    adminObj.audioUrl = text;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Song thumbnail url',
-                  ),
-                  onChanged: (String text) {
-                    adminObj.songThumbnail = text;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Performed by',
-                  ),
-                  onChanged: (String text) {
-                    adminObj.performedBy = text;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Written by',
-                  ),
-                  onChanged: (String text) {
-                    adminObj.writtenBy = text;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Produced by',
-                  ),
-                  onChanged: (String text) {
-                    adminObj.producedBy = text;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Source',
-                  ),
-                  onChanged: (String text) {
-                    adminObj.source = text;
-                  },
-                ),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -280,7 +247,7 @@ class AddSong extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (contex) => Material(
                                   child: ChangeNotifierProvider(
-                                    builder: (_) => Admin(),
+                                    create: (_) => Admin(),
                                     child: SelectArtist(),
                                   ),
                                 )));
@@ -301,9 +268,9 @@ class AddSong extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (contex) => Material(
+                            builder: (context) => Material(
                                   child: ChangeNotifierProvider(
-                                    builder: (_) => Admin(),
+                                    create: (_) => Admin(),
                                     child: SelectCategories(),
                                   ),
                                 )));
@@ -319,18 +286,8 @@ class AddSong extends StatelessWidget {
                 RaisedButton(
                   color: Colors.blue,
                   onPressed: () {
-                    adminObj.addSongs(
-                        adminObj.audioName,
-                        adminObj.audioUrl,
-                        adminObj.performedBy,
-                        adminObj.writtenBy,
-                        adminObj.producedBy,
-                        adminObj.source,
-                        artistId,
-                        adminObj.songThumbnail,
-                        categoriesOfMusic,
-                        adminObj.lyrics,
-                        adminObj.albumofSong);
+                    print(adminObj.newSongData);
+                    adminObj.addSong();
                   },
                   child: Text("Add Song"),
                 )

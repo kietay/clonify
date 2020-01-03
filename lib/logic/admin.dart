@@ -64,36 +64,14 @@ class Admin extends ChangeNotifier {
   List<DocumentSnapshot> catData = [];
   List<DocumentSnapshot> qcatData = [];
 
-  void addSongs(
-      String title,
-      String audioUrl,
-      String performedBy,
-      String writtenBy,
-      String producedBy,
-      String source,
-      String artistIdInside,
-      String thumbnailUrl,
-      List<Map<String, dynamic>> genres,
-      List<Map<String, dynamic>> lyrics,
-      Map<String, dynamic> albumInfo) {
+  Map<String, String> newSongData = {};
+
+  void addSong() {
     var ref = Firestore.instance.collection("songs").document();
 
-    ref.setData({
-      "songId": ref.documentID,
-      "songTitle": title,
-      "releasedTimestamp": DateTime.now(),
-      "audioUrl": audioUrl,
-      "performedBy": performedBy,
-      "writtenBy": writtenBy,
-      "producedBy": producedBy,
-      "source": source,
-      "numberOfPlays": 0,
-      "artistId": artistIdInside,
-      "genres": genres,
-      "lyrics": lyrics,
-      "album": albumInfo,
-      "thumbnailUrl": thumbnailUrl
-    }).then((doc) {
+    newSongData['songId'] = ref.documentID;
+
+    ref.setData(newSongData).then((doc) {
       print("New song added");
     }).catchError((e) {
       print(e);

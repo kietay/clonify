@@ -100,7 +100,7 @@ class ClonifyHome extends StatelessWidget {
           print("Floating action button pressed");
           audioProvider.playButton();
         },
-        tooltip: 'Increment Counter',
+        tooltip: 'Play and pauses music',
         child: Icon(!audioProvider.isPlaying ? Icons.play_arrow : Icons.pause),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

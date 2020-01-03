@@ -48,6 +48,7 @@ class Suggestions extends ChangeNotifier {
         .collection("users")
         .document(firebaseUser.uid)
         .collection("songHistory")
+        .orderBy('lastPlayed', descending: true)
         .getDocuments();
 
     final fetchedSongs = await Future.wait(qsnap.documents.map((elem) async {

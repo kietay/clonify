@@ -88,16 +88,18 @@ class SearchScreen extends StatelessWidget {
             ? Center(child: CircularProgressIndicator())
             : Column(children: [
                 SearchBar(),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: songs.length,
-                  itemBuilder: (context, ind) => SearchResult(
-                      songs[ind].songTitle,
-                      songs[ind].performedBy,
-                      songs[ind].audioUrl,
-                      songs[ind].thumbnailUrl,
-                      songs[ind].songId),
-                ),
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: songs.length,
+                    itemBuilder: (context, ind) => SearchResult(
+                        songs[ind].songTitle,
+                        songs[ind].performedBy,
+                        songs[ind].audioUrl,
+                        songs[ind].thumbnailUrl,
+                        songs[ind].songId),
+                  ),
+                )
               ]));
   }
 }
